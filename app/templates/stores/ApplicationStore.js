@@ -12,7 +12,6 @@ var ApplicationStore = createStore({
         this.currentPage = null;
         this.currentRoute = null;
         this.pages = routesConfig;
-        this.pageTitle = '';
     },
     handleNavigate: function (route) {
         if (this.currentRoute && (this.currentRoute.url === route.url)) {
@@ -24,7 +23,6 @@ var ApplicationStore = createStore({
 
         this.currentPageName = pageName;
         this.currentPage = page;
-        this.pageTitle = page.title || '';
         this.currentRoute = route;
         this.emitChange();
     },
@@ -32,7 +30,7 @@ var ApplicationStore = createStore({
         return this.currentPageName;
     },
     getPageTitle: function () {
-        return this.pageTitle;
+        return this.currentPage && this.currentPage.title || '';
     },
     getCurrentRoute: function () {
         return this.currentRoute;
@@ -45,8 +43,7 @@ var ApplicationStore = createStore({
             currentPageName: this.currentPageName,
             currentPage: this.currentPage,
             pages: this.pages,
-            route: this.currentRoute,
-            pageTitle: this.pageTitle
+            route: this.currentRoute
         };
     },
     rehydrate: function (state) {
@@ -54,7 +51,6 @@ var ApplicationStore = createStore({
         this.currentPage = state.currentPage;
         this.pages = state.pages;
         this.currentRoute = state.route;
-        this.pageTitle = state.pageTitle;
     }
 });
 
